@@ -286,7 +286,10 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       method = 'POST'
       target = preTarget
-      data = query
+      data = {}
+      utils.each(query, function (v, k) {
+        data[k] = v
+      })
     } else {
       // Add data from the query options
       data = new FormData()
