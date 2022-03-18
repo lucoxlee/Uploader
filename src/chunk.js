@@ -76,8 +76,8 @@ utils.extend(Chunk.prototype, {
     this.xhr = new XMLHttpRequest()
     this.xhr.addEventListener('load', testHandler, false)
     this.xhr.addEventListener('error', testHandler, false)
-    // var testMethod = utils.evalOpts(this.uploader.opts.testMethod, this.file, this)
-    var data = 'a=1&b=2'
+    var testMethod = utils.evalOpts(this.uploader.opts.testMethod, this.file, this)
+    var data = this.prepareXhrRequest(testMethod, true)
     this.xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8')
     this.xhr.send(data)
 
@@ -287,7 +287,8 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       method = 'POST'
       target = preTarget
-      data = this.uploader.opts.preQuery
+      // data = this.uploader.opts.preQuery
+      data = 'a=1&b=2'
     } else {
       // Add data from the query options
       data = new FormData()
