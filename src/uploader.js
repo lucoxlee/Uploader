@@ -79,7 +79,7 @@ Uploader.defaults = {
   progressCallbacksInterval: 500,
   speedSmoothingFactor: 0.1,
   query: {},
-  preQuery: '',
+  preQuery: {},
   headers: {},
   withCredentials: false,
   preprocess: null,

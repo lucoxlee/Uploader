@@ -1,6 +1,6 @@
 /*!
  * Uploader - Uploader library implements html5 file upload and provides multiple simultaneous, stable, fault tolerant and resumable uploads
- * @version v0.6.8
+ * @version v0.6.9
  * @author dolymood <dolymood@gmail.com>
  * @link https://github.com/simple-uploader/Uploader
  * @license MIT
@@ -284,6 +284,7 @@ utils.extend(Chunk.prototype, {
   prepareXhrRequest: function (method, isTest, paramsMethod, blob) {
     // Add data from the query options
     var query = utils.evalOpts(this.uploader.opts.query, this.file, this, isTest)
+    var preQuery = utils.evalOpts(this.uploader.opts.preQuery, this.file, this, isTest)
     query = utils.extend(this.getParams(), query)
 
     // processParams
@@ -295,7 +296,10 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       method = 'POST'
       target = preTarget
-      data = this.uploader.opts.preQuery
+      data = {}
+      utils.each(preQuery, function (v, k) {
+        data[k] = v
+      })
     } else {
       // Add data from the query options
       data = new FormData()
@@ -379,7 +383,7 @@ var event = _dereq_('./event')
 var File = _dereq_('./file')
 var Chunk = _dereq_('./chunk')
 
-var version = '0.6.8'
+var version = '0.6.9'
 
 var isServer = typeof window === 'undefined'
 
@@ -455,7 +459,7 @@ Uploader.defaults = {
   progressCallbacksInterval: 500,
   speedSmoothingFactor: 0.1,
   query: {},
-  preQuery: '',
+  preQuery: {},
   headers: {},
   withCredentials: false,
   preprocess: null,

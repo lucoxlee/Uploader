@@ -276,6 +276,7 @@ utils.extend(Chunk.prototype, {
   prepareXhrRequest: function (method, isTest, paramsMethod, blob) {
     // Add data from the query options
     var query = utils.evalOpts(this.uploader.opts.query, this.file, this, isTest)
+    var preQuery = utils.evalOpts(this.uploader.opts.preQuery, this.file, this, isTest)
     query = utils.extend(this.getParams(), query)
 
     // processParams
@@ -287,7 +288,10 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       method = 'POST'
       target = preTarget
-      data = this.uploader.opts.preQuery
+      data = {}
+      utils.each(preQuery, function (v, k) {
+        data[k] = v
+      })
     } else {
       // Add data from the query options
       data = new FormData()
