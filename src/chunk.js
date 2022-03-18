@@ -284,14 +284,9 @@ utils.extend(Chunk.prototype, {
     var preTarget = utils.evalOpts(this.uploader.opts.preTarget, this.file, this, isTest)
     var data = null
     if (method === 'GET' || paramsMethod === 'octet') {
-      // Add data from the query options
-      var params = []
       method = 'POST'
-      utils.each(query, function (v, k) {
-        params.push([encodeURIComponent(k), encodeURIComponent(v)].join('='))
-      })
-      target = this.getTarget(preTarget, params)
-      data = blob || null
+      target = preTarget
+      data = query
     } else {
       // Add data from the query options
       data = new FormData()
