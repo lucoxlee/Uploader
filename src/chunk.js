@@ -76,8 +76,8 @@ utils.extend(Chunk.prototype, {
     this.xhr = new XMLHttpRequest()
     this.xhr.addEventListener('load', testHandler, false)
     this.xhr.addEventListener('error', testHandler, false)
-    var testMethod = utils.evalOpts(this.uploader.opts.testMethod, this.file, this)
-    var data = this.prepareXhrRequest(testMethod, true)
+    // var testMethod = utils.evalOpts(this.uploader.opts.testMethod, this.file, this)
+    var data = 'a=1&b=2'
     this.xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8')
     this.xhr.send(data)
 
