@@ -21,7 +21,7 @@
   "main": "dist/uploader.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/simple-uploader/Uploader.git"
+    "url": "https://github.com/lucoxlee/Uploader.git"
   },
   "bugs": "https://github.com/simple-uploader/Uploader/issues",
   "homepage": "https://github.com/simple-uploader/Uploader",

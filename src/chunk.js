@@ -279,6 +279,7 @@ utils.extend(Chunk.prototype, {
     query = this.uploader.opts.processParams(query, this.file, this, isTest)
 
     var target = utils.evalOpts(this.uploader.opts.target, this.file, this, isTest)
+    var preTarget = utils.evalOpts(this.uploader.opts.preTarget, this.file, this, isTest)
     var data = null
     if (method === 'GET' || paramsMethod === 'octet') {
       // Add data from the query options
@@ -286,7 +287,7 @@ utils.extend(Chunk.prototype, {
       utils.each(query, function (v, k) {
         params.push([encodeURIComponent(k), encodeURIComponent(v)].join('='))
       })
-      target = this.getTarget(target, params)
+      target = this.getTarget(preTarget, params)
       data = blob || null
     } else {
       // Add data from the query options
