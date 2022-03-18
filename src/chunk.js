@@ -287,8 +287,7 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       method = 'POST'
       target = preTarget
-      // data = this.uploader.opts.preQuery
-      data = 'a=1&b=2'
+      data = this.uploader.opts.preQuery
     } else {
       // Add data from the query options
       data = new FormData()
