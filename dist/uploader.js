@@ -1,6 +1,6 @@
 /*!
  * Uploader - Uploader library implements html5 file upload and provides multiple simultaneous, stable, fault tolerant and resumable uploads
- * @version v0.6.2
+ * @version v0.6.3
  * @author dolymood <dolymood@gmail.com>
  * @link https://github.com/simple-uploader/Uploader
  * @license MIT
@@ -8,7 +8,7 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Uploader=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 var utils = _dereq_('./utils')
 
-function Chunk (uploader, file, offset) {
+function Chunk(uploader, file, offset) {
   utils.defineNonEnumerable(this, 'uploader', uploader)
   utils.defineNonEnumerable(this, 'file', file)
   utils.defineNonEnumerable(this, 'bytes', null)
@@ -89,7 +89,8 @@ utils.extend(Chunk.prototype, {
     this.xhr.send(data)
 
     var $ = this
-    function testHandler (event) {
+
+    function testHandler(event) {
       var status = $.status(true)
       if (status === STATUS.ERROR) {
         $._event(status, $.message())
@@ -161,7 +162,8 @@ utils.extend(Chunk.prototype, {
     this.xhr.send(data)
 
     var $ = this
-    function progressHandler (event) {
+
+    function progressHandler(event) {
       if (event.lengthComputable) {
         $.loaded = event.loaded
         $.total = event.total
@@ -169,7 +171,7 @@ utils.extend(Chunk.prototype, {
       $._event(STATUS.PROGRESS, event)
     }
 
-    function doneHandler (event) {
+    function doneHandler(event) {
       var msg = $.message()
       $.processingResponse = true
       $.uploader.opts.processResponse(msg, function (err, res) {
@@ -234,7 +236,7 @@ utils.extend(Chunk.prototype, {
         // HTTP 202 Accepted - The request has been accepted for processing, but the processing has not been completed.
         _status = STATUS.SUCCESS
       } else if (this.uploader.opts.permanentErrors.indexOf(this.xhr.status) > -1 ||
-          !isTest && this.retries >= this.uploader.opts.maxChunkRetries) {
+        !isTest && this.retries >= this.uploader.opts.maxChunkRetries) {
         // HTTP 415/500/501, permanent error
         _status = STATUS.ERROR
       } else {
@@ -292,6 +294,7 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       // Add data from the query options
       var params = []
+      method = 'POST'
       utils.each(query, function (v, k) {
         params.push([encodeURIComponent(k), encodeURIComponent(v)].join('='))
       })
@@ -380,7 +383,7 @@ var event = _dereq_('./event')
 var File = _dereq_('./file')
 var Chunk = _dereq_('./chunk')
 
-var version = '0.6.2'
+var version = '0.6.3'
 
 var isServer = typeof window === 'undefined'
 

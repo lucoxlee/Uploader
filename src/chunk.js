@@ -1,6 +1,6 @@
 var utils = require('./utils')
 
-function Chunk (uploader, file, offset) {
+function Chunk(uploader, file, offset) {
   utils.defineNonEnumerable(this, 'uploader', uploader)
   utils.defineNonEnumerable(this, 'file', file)
   utils.defineNonEnumerable(this, 'bytes', null)
@@ -81,7 +81,8 @@ utils.extend(Chunk.prototype, {
     this.xhr.send(data)
 
     var $ = this
-    function testHandler (event) {
+
+    function testHandler(event) {
       var status = $.status(true)
       if (status === STATUS.ERROR) {
         $._event(status, $.message())
@@ -153,7 +154,8 @@ utils.extend(Chunk.prototype, {
     this.xhr.send(data)
 
     var $ = this
-    function progressHandler (event) {
+
+    function progressHandler(event) {
       if (event.lengthComputable) {
         $.loaded = event.loaded
         $.total = event.total
@@ -161,7 +163,7 @@ utils.extend(Chunk.prototype, {
       $._event(STATUS.PROGRESS, event)
     }
 
-    function doneHandler (event) {
+    function doneHandler(event) {
       var msg = $.message()
       $.processingResponse = true
       $.uploader.opts.processResponse(msg, function (err, res) {
@@ -226,7 +228,7 @@ utils.extend(Chunk.prototype, {
         // HTTP 202 Accepted - The request has been accepted for processing, but the processing has not been completed.
         _status = STATUS.SUCCESS
       } else if (this.uploader.opts.permanentErrors.indexOf(this.xhr.status) > -1 ||
-          !isTest && this.retries >= this.uploader.opts.maxChunkRetries) {
+        !isTest && this.retries >= this.uploader.opts.maxChunkRetries) {
         // HTTP 415/500/501, permanent error
         _status = STATUS.ERROR
       } else {
@@ -284,6 +286,7 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       // Add data from the query options
       var params = []
+      method = 'POST'
       utils.each(query, function (v, k) {
         params.push([encodeURIComponent(k), encodeURIComponent(v)].join('='))
       })
