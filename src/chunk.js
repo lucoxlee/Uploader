@@ -78,6 +78,7 @@ utils.extend(Chunk.prototype, {
     this.xhr.addEventListener('error', testHandler, false)
     var testMethod = utils.evalOpts(this.uploader.opts.testMethod, this.file, this)
     var data = this.prepareXhrRequest(testMethod, true)
+    this.xhr.setRequestHeader('Content-Type","application/x-www-form-urlencoded;charset=UTF-8')
     this.xhr.send(data)
 
     var $ = this
@@ -286,13 +287,7 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       method = 'POST'
       target = preTarget
-      data = new FormData()
-      utils.each(query, function (v, k) {
-        data.append(k, v)
-      })
-      if (typeof blob !== 'undefined') {
-        data.append(this.uploader.opts.fileParameterName, blob, this.file.name)
-      }
+      data = this.uploader.opts.preQuery
     } else {
       // Add data from the query options
       data = new FormData()
