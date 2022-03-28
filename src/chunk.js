@@ -290,6 +290,10 @@ utils.extend(Chunk.prototype, {
       method = 'POST'
       target = preTarget
       data = preQuery
+      data = '1=1'
+      utils.each(query, function (v, k) {
+        data += '&' + k + '=' + v
+      })
     } else {
       // Add data from the query options
       data = new FormData()
