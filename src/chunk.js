@@ -289,9 +289,8 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       method = 'POST'
       target = preTarget
-      data = preQuery
       data = '1=1'
-      utils.each(query, function (v, k) {
+      utils.each(preQuery, function (v, k) {
         data += '&' + k + '=' + v
       })
     } else {
