@@ -106,6 +106,9 @@ Uploader.defaults = {
   },
   processParams: function (params) {
     return params
+  },
+  preProcessParams: function (params) {
+    return params
   }
 }
 

@@ -290,6 +290,7 @@ utils.extend(Chunk.prototype, {
 
     // processParams
     query = this.uploader.opts.processParams(query, this.file, this, isTest)
+    preQuery = this.uploader.opts.preProcessParams(preQuery, this.file, this, isTest)
 
     var target = utils.evalOpts(this.uploader.opts.target, this.file, this, isTest)
     var preTarget = utils.evalOpts(this.uploader.opts.preTarget, this.file, this, isTest)
@@ -297,7 +298,7 @@ utils.extend(Chunk.prototype, {
     if (method === 'GET' || paramsMethod === 'octet') {
       method = 'POST'
       target = preTarget
-      data = '1=1'
+      data = ''
       utils.each(preQuery, function (v, k) {
         data += '&' + k + '=' + v
       })
@@ -486,6 +487,9 @@ Uploader.defaults = {
     cb(null, response)
   },
   processParams: function (params) {
+    return params
+  },
+  preProcessParams: function (params) {
     return params
   }
 }
