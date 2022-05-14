@@ -281,7 +281,10 @@ utils.extend(Chunk.prototype, {
     preQuery = utils.extend(this.getParams(), preQuery)
 
     // processParams
-    query = this.uploader.opts.processParams(query, this.file, this, isTest)
+    // this.uploader.opts.processParams(query, this.file, this, isTest).then(value => {
+    //   // console.log(3, value)
+    //   query = value
+    // })
     preQuery = this.uploader.opts.preProcessParams(preQuery, this.file, this, isTest)
 
     var target = utils.evalOpts(this.uploader.opts.target, this.file, this, isTest)
