@@ -313,6 +313,7 @@ utils.extend(Chunk.prototype, {
       this.xhr.setRequestHeader(k, v)
     }, this)
     if (preQuery.headers != null) {
+      console.log(2, preQuery)
       utils.each(utils.evalOpts(preQuery.headers, this.file, this, isTest), function (v, k) {
         this.xhr.setRequestHeader(k, v)
       }, this)
