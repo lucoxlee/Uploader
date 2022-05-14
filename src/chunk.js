@@ -317,6 +317,11 @@ utils.extend(Chunk.prototype, {
         this.xhr.setRequestHeader(k, v)
       }, this)
     }
+    if (query.headers != null) {
+      utils.each(utils.evalOpts(query.headers, this.file, this, isTest), function (v, k) {
+        this.xhr.setRequestHeader(k, v)
+      }, this)
+    }
     return data
   }
 
