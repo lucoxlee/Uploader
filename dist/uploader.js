@@ -320,7 +320,11 @@ utils.extend(Chunk.prototype, {
     utils.each(utils.evalOpts(this.uploader.opts.headers, this.file, this, isTest), function (v, k) {
       this.xhr.setRequestHeader(k, v)
     }, this)
-
+    if (preQuery.headers != null) {
+      utils.each(utils.evalOpts(preQuery.headers, this.file, this, isTest), function (v, k) {
+        this.xhr.setRequestHeader(k, v)
+      }, this)
+    }
     return data
   }
 
