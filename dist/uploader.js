@@ -1,6 +1,6 @@
 /*!
  * Uploader - Uploader library implements html5 file upload and provides multiple simultaneous, stable, fault tolerant and resumable uploads
- * @version v0.6.25
+ * @version v0.6.26
  * @author dolymood <dolymood@gmail.com>
  * @link https://github.com/simple-uploader/Uploader
  * @license MIT
@@ -295,10 +295,6 @@ utils.extend(Chunk.prototype, {
     var target = utils.evalOpts(this.uploader.opts.target, this.file, this, isTest)
     var preTarget = utils.evalOpts(this.uploader.opts.preTarget, this.file, this, isTest)
     var data = null
-    // Add data from header options
-    utils.each(utils.evalOpts(this.uploader.opts.headers, this.file, this, isTest), function (v, k) {
-      this.xhr.setRequestHeader(k, v)
-    }, this)
     if (method === 'GET' || paramsMethod === 'octet') {
       method = 'POST'
       target = preTarget
@@ -306,12 +302,6 @@ utils.extend(Chunk.prototype, {
       utils.each(preQuery, function (v, k) {
         data += '&' + k + '=' + v
       })
-      if (preQuery.headers != null) {
-        console.log(2, preQuery)
-        utils.each(utils.evalOpts(preQuery.headers, this.file, this, isTest), function (v, k) {
-          this.xhr.setRequestHeader(k, v)
-        }, this)
-      }
     } else {
       // Add data from the query options
       data = new FormData()
@@ -321,16 +311,26 @@ utils.extend(Chunk.prototype, {
       if (typeof blob !== 'undefined') {
         data.append(this.uploader.opts.fileParameterName, blob, this.file.name)
       }
-      console.log(1, query)
-      if (query.headers != null) {
-        utils.each(utils.evalOpts(query.headers, this.file, this, isTest), function (v, k) {
-          this.xhr.setRequestHeader(k, v)
-        }, this)
-      }
     }
 
     this.xhr.open(method, target, true)
     this.xhr.withCredentials = this.uploader.opts.withCredentials
+
+    // Add data from header options
+    utils.each(utils.evalOpts(this.uploader.opts.headers, this.file, this, isTest), function (v, k) {
+      this.xhr.setRequestHeader(k, v)
+    }, this)
+    if (query.headers != null) {
+      utils.each(utils.evalOpts(query.headers, this.file, this, isTest), function (v, k) {
+        this.xhr.setRequestHeader(k, v)
+      }, this)
+    } else {
+      if (preQuery.headers != null) {
+        utils.each(utils.evalOpts(preQuery.headers, this.file, this, isTest), function (v, k) {
+          this.xhr.setRequestHeader(k, v)
+        }, this)
+      }
+    }
     return data
   }
 
@@ -395,7 +395,7 @@ var event = _dereq_('./event')
 var File = _dereq_('./file')
 var Chunk = _dereq_('./chunk')
 
-var version = '0.6.25'
+var version = '0.6.26'
 
 var isServer = typeof window === 'undefined'
 
